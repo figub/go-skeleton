@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // Student represents a student in the directory.
@@ -17,7 +18,10 @@ type Student struct {
 // Go does not allow unused imports. This line references the json package so the
 // compiler accepts the import before you use it in your implementation.
 // Remove it once you call json functions in your handler.
-var _ = json.Marshal
+var (
+	_ = json.Marshal
+	_ = strings.TrimPrefix
+)
 
 // In-memory store: name -> Student
 var students = map[string]Student{
