@@ -27,7 +27,7 @@ type Student struct {
 
 // getStudent fetches a student by name from the server.
 func getStudent(name string) (Student, error) {
-	// TODO 1: Send a GET request to http://localhost:8080/student?name=<name>
+	// TODO 1: Send a GET request to http://localhost:8080/students/<name>
 	//         http.Get(url) returns (resp, err).
 
 	// TODO 2: Check the error and handle it.
@@ -51,7 +51,7 @@ func addStudent(s Student) error {
 	// TODO 1: Convert the student struct to JSON bytes.
 	//         json.Marshal(s) returns ([]byte, error).
 
-	// TODO 2: Send a POST request to http://localhost:8080/student/add
+	// TODO 2: Send a POST request to http://localhost:8080/students
 	//         http.Post(url, "application/json", bytes.NewBuffer(data))
 
 	// TODO 3: Check the error and handle it.

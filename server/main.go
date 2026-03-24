@@ -25,13 +25,13 @@ var students = map[string]Student{
 	"bob":   {Name: "bob", Major: "Mathematics", Year: 2},
 }
 
-// handleGetStudent handles GET /student?name=<name>
+// handleGetStudent handles GET /students/{name}
 func handleGetStudent(w http.ResponseWriter, r *http.Request) {
 	// TODO 1: Check that the HTTP method is GET.
 	//         If not: http.Error(w, "Method not allowed", http.StatusMethodNotAllowed) and return.
 
-	// TODO 2: Read the "name" query parameter from the URL.
-	//         r.URL.Query().Get("name") returns the value as a string.
+	// TODO 2: Extract the student name from the URL path.
+	//         strings.TrimPrefix(r.URL.Path, "/students/") returns the name.
 	//         If empty: http.Error(w, "...", http.StatusBadRequest) and return.
 
 	// TODO 3: Look up the student in the "students" map.
@@ -47,7 +47,7 @@ func handleGetStudent(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "not implemented", http.StatusNotImplemented)
 }
 
-// handleAddStudent handles POST /student/add
+// handleAddStudent handles POST /students
 func handleAddStudent(w http.ResponseWriter, r *http.Request) {
 	// TODO 1: Check that the HTTP method is POST.
 
@@ -65,8 +65,8 @@ func handleAddStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/student", handleGetStudent)
-	http.HandleFunc("/student/add", handleAddStudent)
+	http.HandleFunc("/students/", handleGetStudent)
+	http.HandleFunc("/students", handleAddStudent)
 
 	fmt.Println("Server running on http://localhost:8080")
 	http.ListenAndServe(":8080", nil)
