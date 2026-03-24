@@ -11,26 +11,26 @@ The **client** communicates with the server: it fetches students and creates new
 
 ## What to implement
 
-### Server (`starter/server/main.go`)
+### Server (`server/main.go`)
 
 The server should run on **port 8080** and provide two routes:
 
-| Method | Route          | Description                              |
-|--------|----------------|------------------------------------------|
-| `GET`  | `/student`     | Returns a single student as JSON.        |
-| `POST` | `/student/add` | Accepts a new student as JSON.           |
+| Method   | Route              | Description                              |
+|----------|--------------------|------------------------------------------|
+| `GET`    | `/students/{name}` | Returns a single student as JSON.        |
+| `POST`   | `/students`        | Accepts a new student as JSON.           |
 
-**GET /student**
-- Query parameter: `?name=alice`
+**GET /students/{name}**
+- Name is part of the URL path, e.g. `/students/alice`
 - Returns the student as JSON on success (HTTP 200)
 - Returns HTTP 404 if the student is not found
 
-**POST /student/add**
+**POST /students**
 - Body: JSON with `name`, `major`, `year`
 - Stores the student in the in-memory map
 - Returns HTTP 201
 
-### Client (`starter/client/main.go`)
+### Client (`client/main.go`)
 
 The client should:
 1. Fetch an existing student via `GET` and print the result
