@@ -64,5 +64,5 @@ type Student struct {
 ## Bonus (optional)
 
 - Return all stored students via `GET /students` as a JSON array
-- Add a `DELETE /student?name=...` endpoint
+- Add a `DELETE /students/{name}` endpoint
 - Print a nicely formatted output in the client using `fmt.Printf`
