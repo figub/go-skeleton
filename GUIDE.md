@@ -6,16 +6,16 @@ This guide walks you through the exercise step by step.
 
 ## Step 1 — Set up the project
 
-Open two terminals. Both start from inside the `exercise/` directory.
+Open two terminals. Both start from inside the `go-skeleton/` directory.
 
 ```bash
 # Terminal 1: Server
-cd starter/server
+cd server
 go mod init student-server
 go run main.go
 
 # Terminal 2: Client
-cd starter/client
+cd client
 go mod init student-client
 go run main.go
 ```
@@ -56,7 +56,7 @@ func myHandler(w http.ResponseWriter, r *http.Request) {
 
 **Steps for the GET handler:**
 1. Check the HTTP method: `r.Method != http.MethodGet`
-2. Read the query parameter: `r.URL.Query().Get("name")`
+2. Extract the name from the URL path: `strings.TrimPrefix(r.URL.Path, "/students/")`
 3. Look up the student in the `students` map: `student, ok := students[name]`
 4. On success: set the Content-Type header and encode the struct as JSON
 
@@ -89,8 +89,8 @@ if err := json.NewDecoder(r.Body).Decode(&student); err != nil {
 
 ```go
 func main() {
-    http.HandleFunc("/student",     handleGetStudent)
-    http.HandleFunc("/student/add", handleAddStudent)
+    http.HandleFunc("/students/", handleGetStudent)
+    http.HandleFunc("/students",  handleAddStudent)
 
     fmt.Println("Server running on http://localhost:8080")
     http.ListenAndServe(":8080", nil)
@@ -104,7 +104,7 @@ func main() {
 ### 4.1 — Send a GET request
 
 ```go
-resp, err := http.Get("http://localhost:8080/student?name=" + name)
+resp, err := http.Get("http://localhost:8080/students/" + name)
 if err != nil {
     return Student{}, err
 }
@@ -129,7 +129,7 @@ data, err := json.Marshal(newStudent)
 
 // POST with JSON body
 resp, err := http.Post(
-    "http://localhost:8080/student/add",
+    "http://localhost:8080/students",
     "application/json",
     bytes.NewBuffer(data),
 )
@@ -143,10 +143,10 @@ You can also test the server directly with `curl`:
 
 ```bash
 # Fetch a student
-curl "http://localhost:8080/student?name=alice"
+curl "http://localhost:8080/students/alice"
 
 # Add a new student
-curl -X POST http://localhost:8080/student/add \
+curl -X POST http://localhost:8080/students \
      -H "Content-Type: application/json" \
      -d '{"name":"dave","major":"Physics","year":1}'
 ```
